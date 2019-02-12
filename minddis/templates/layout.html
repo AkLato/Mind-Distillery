@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if title %}
+        <title>Mind Distillery - {{ title }}</title>
+    {% else %}
+        <title>Mind Distillery</title>
+    {% endif %}
+    <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
+    <!-- Bulma Version 0.7.2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+</head>
+
+<body>
+     <!-- Navbar -->
+    <div class="container">
+      <img src="/static/backgrounds/{{ r }}" id='ranbg' alt="Gone" style="width:100%;">
+      <!--
+      <div class="bottom-left">
+        <a href="https://www.aklato.eu/"><i class="fas fa-arrow-left"></i></a>
+      </div>
+    -->
+
+      <div class="top-left">
+          <a href="#">Mind Distillery</a>
+          <a class='button is-dark' id='left_button' href="{{ url_for('home') }}">Domů</a>
+          <a class='button is-dark' id='left_button' href="{{ url_for('about') }}">Info</a>
+          <a class="button is-dark" id='left_button' href="{{ url_for('comments') }}">Diskuze</a>
+
+      </div>
+
+      <div class="top-right">
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" type="text" placeholder="">
+          </div>
+          <div class="control">
+            <a class="search">Vyhledat</a>
+          </div>
+            {% if current_user.is_authenticated %}
+              <a class="button is-dark" href="{{ url_for('new_post') }}">Nový příspěvek</a>
+              <a class="button is-dark" href="{{ url_for('account') }}">Profil</a>
+              <a class="button is-dark" href="{{ url_for('logout') }}">Odhlásit</a>
+            {% else %}
+              <a class="button is-dark" href="{{ url_for('login') }}">Přihlášení</a>
+              <a class="button is-dark" href="{{ url_for('register') }}">Registrace</a>
+            {% endif %}
+        </div>
+      </div>
+
+      <div class="centered">
+        <div class="container has-text-centered">
+          <h1>{{ r_quote }}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      
+          {% block content %}{% endblock %}
+    </div>
+    
+    <div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="notification is-info -{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+      {% block post_comment %}{% endblock %}
+      {% block comment %}{% endblock %}
+    </div>
+
+    
+    
+
+    <!-- Footer -->
+    <footer>
+      <div class="block card info">
+        <div class="columns">
+          <div class="column is-half has-text-centered ">
+            <a href="mailto:rajsigltom@gmail.com"><i class="fas fa-envelope"></i></a>
+              <p>rajsigltom@gmail.com</p>
+          </div>
+          <div class="column is-half has-text-centered">
+            <a href="https://www.linkedin.com/in/tom%C3%A1%C5%A1-rajsigl-660683b9/"><i class="fab fa-linkedin"></i></a>
+           <p>LinkedIn</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</body>
+</html>

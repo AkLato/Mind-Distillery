@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+    	<legend class="title is-4">Profil</legend>
+	      <div class="media">
+	        <img class="image is-128x128" src="{{ image_file }}" style="margin-right: 1rem;">
+	        <div class="media-body">
+	          <h2 class="account-heading">{{ current_user.username }}</h2>
+	          <p class="text-secondary">{{ current_user.email }}</p>
+	          <br>
+	          <p>{{ current_user.motto }}</p>
+	        </div>
+	      </div>
+	      <br>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="field">
+            	{{ form.username.label(class="label") }}
+				<div class="control has-icons-left has-icons-right">
+					<span class="icon is-small is-left">
+  						<i class="fas fa-user"></i>
+					</span>
+            	{% if form.username.errors %}
+                    {{ form.username(class="control input") }}
+                        {% for error in form.username.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                {% else %}
+			  		{{ form.username(class="control input") }}
+			  	{% endif %}
+			  	</div> 
+			</div>
+			<div class="field">
+				{{ form.email.label(class="label") }}
+				<div class="control has-icons-left has-icons-right">
+				    <span class="icon is-small is-left">
+				      <i class="fas fa-envelope-square"></i>
+				    </span>
+				{% if form.email.errors %}
+                    {{ form.email(class="control input") }}
+                        {% for error in form.email.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                {% else %}
+			  		{{ form.email(class="control input") }} 
+			  	{% endif %}
+			  	</div>
+			</div>
+			<div class="field">
+				{{ form.motto.label(class="label") }}
+				<div class="control has-icons-left has-icons-right">
+				    <span class="icon is-small is-left">
+				      <i class="fas fa-quote-right"></i>
+				    </span>
+				    <span class="icon is-small is-right">
+				    <i class="fas fa-quote-left"></i>
+				    </span>
+			  		{{ form.motto(class="control input") }} 
+			  	</div>
+			</div>
+            <div class="field">
+                {{ form.picture.label(class="label") }}
+                {{ form.picture(class="file-label") }}
+                {% if form.picture.errors %}
+                    {% for error in form.picture.errors %}
+                        <span class="help is-danger">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <br>
+			<div class="field">
+			  <p class="control">
+			  	{{ form.submit(class="button is-primary is-fullwidth") }}
+			  </p>
+			</div>
+        </form>
+    </div>
+{% endblock content %}

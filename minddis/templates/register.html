@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="columns" style="position:relative;top:-75px">
+	  <div class="column is-half is-offset-one-quarter">
+	    <div class="content-section">
+	        <form method="POST" action="">
+	            {{ form.hidden_tag() }}
+	            <legend class="title is-3">Join Today</legend>
+	            <div class="field">
+	            	{{ form.username.label(class="label") }}
+					<div class="control has-icons-left has-icons-right">
+						<span class="icon is-small is-left">
+      						<i class="fas fa-user"></i>
+    					</span>
+	            	{% if form.username.errors %}
+                        {{ form.username(class="control input") }}
+                            {% for error in form.username.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                    {% else %}
+				  		{{ form.username(class="control input") }}
+				  	{% endif %}
+				  	</div> 
+				</div>
+				<div class="field">
+					{{ form.email.label(class="label") }}
+					<div class="control has-icons-left has-icons-right">
+					    <span class="icon is-small is-left">
+					      <i class="fas fa-envelope-square"></i>
+					    </span>
+					{% if form.email.errors %}
+                        {{ form.email(class="control input") }}
+                            {% for error in form.email.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                    {% else %}
+				  		{{ form.email(class="control input") }} 
+				  	{% endif %}
+				  	</div>
+				</div>
+				<div class="field">
+				  	{{ form.password.label(class="label") }}
+				  	<div class="control has-icons-left has-icons-right">
+					    <span class="icon is-small is-left">
+					      <i class="fas fa-lock"></i>
+					    </span>
+				  	{% if form.password.errors %}
+                        {{ form.password(class="control input") }}
+                            {% for error in form.password.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                    {% else %}
+				  		{{ form.password(class="control input") }} 
+				  	{% endif %}
+				  </div>
+				</div>
+				<div class="field">
+				  	{{ form.confirm_password.label(class="label") }}
+				  	<div class="control has-icons-left has-icons-right">
+					    <span class="icon is-small is-left">
+					      <i class="fas fa-lock"></i>
+					    </span>	
+				  	{% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="control input") }}
+                            {% for error in form.confirm_password.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                    {% else %}
+				  		{{ form.confirm_password(class="control input") }} 
+				  	 {% endif %}
+				  	</div>
+				</div>
+				<div class="field">
+				  <p class="control">
+				  	{{ form.submit(class="button is-success is-fullwidth") }}
+				  </p>
+				</div>
+	        </form>
+	    </div>
+	    <small class="is-size-6">
+	            Už máte účet? <a class="is-size-6" href="{{ url_for('login') }}">Přihlásit se</a>
+	    </small>
+	  </div>
+	</div>
+{% endblock content %}

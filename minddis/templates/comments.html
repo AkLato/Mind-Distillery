@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block comment %}
+    {% for comment in comments %}
+    <section class='comments'>
+        <div class='columns'>
+            <div class='column is-3'>
+                <h3 class='title is-5'> {{ comment.username }}</h3>
+                <small class="text-muted ">{{ comment.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <div class='column is-9'>
+                <p>{{ comment.content }}</p>
+            </div>
+        </div>
+    <hr>
+    </section>
+    {% endfor %}
+{% endblock %} 
+
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <legend class="title is-3">Comments</legend>
+            <div class="field">
+                {{ form.username.label(class="label") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="control input") }}
+                        {% for error in form.username.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                {% else %}
+                    {{ form.username(class="control input") }} 
+                {% endif %}
+            </div>
+            <div class="field">
+                {{ form.content.label(class="label") }}
+                {% if form.content.errors %}
+                    {{ form.content(class="control input") }}
+                        {% for error in form.content.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                {% else %}
+                    {{ form.content(class="textarea") }} 
+                {% endif %}
+            </div>
+            <p class="control">{{ form.submit(class="button is-success is-pulled-right") }}</p>
+        </form>
+    </div>
+{% endblock %} 

@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <img class="image is-96x96 article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+        <div class="media-body">
+            <div class="article-metadata">
+            <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+            <small class="text-muted is-pulled-right">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            {% if post.author == current_user %}
+            <span>
+                <a class="button is-primary is-small" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+                <a class="button is-danger is-small" href="{{ url_for('delete_post', post_id=post.id) }}">Delete</a>
+            </span>
+            {% endif %}
+            </div>
+            <br>  
+            <h2 class="is-size-3">{{ post.title }}</h2>
+            <br>  
+            <p class="article-content">{{ post.content }}</p>
+        </div>
+    </article>
+
+  {% endblock content %}
+
+    {% block post_comment %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <legend class="title is-3">Comments</legend>
+            <div class="field">
+                {{ form.username.label(class="label") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="control input") }}
+                        {% for error in form.username.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                {% else %}
+                    {{ form.username(class="control input") }} 
+                {% endif %}
+            </div>
+            <div class="field">
+                {{ form.content.label(class="label") }}
+                {% if form.content.errors %}
+                    {{ form.content(class="control input") }}
+                        {% for error in form.content.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                {% else %}
+                    {{ form.content(class="textarea") }} 
+                {% endif %}
+            </div>
+            <p class="control">{{ form.submit(class="button is-success is-pulled-right") }}</p>
+        </form>
+    </div>
+    
+    {% for post_comment in post_comments %}
+    <section class='comments'>
+        <div class='columns'>
+            <div class='column is-3'>
+                <h3 class='title is-5'> {{ post_comment.username }}</h3>
+                <small class="text-muted ">{{ post_comment.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <div class='column is-9'>
+                <p>{{ post_comment.content }}</p>
+            </div>
+        </div>
+    <hr>
+    </section>
+    {% endfor %}
+  {% endblock %} 
+
+    
